@@ -1,0 +1,21 @@
+Ntrain = 300
+lamb = np.logspace(-4,2)
+Xtrain = stats.zscore(data[:Ntrain,:-1],axis=0)
+ytrain = data[:Ntrain,-1][...,None]
+beta_set = []
+ax = plt.axes()
+for lam in lamb:
+    reg = sl.Lasso(alpha=lam).fit(Xtrain,ytrain)
+    beta_set.append(reg.coef_)
+beta_set = np.array(beta_set).transpose()
+colors = matplotlib.cm.jet(np.linspace(0,1,len(beta_set)))
+for i in range(len(beta_set)):
+    plt.plot(lamb,beta_set[i],label=r'$\beta$'+str(i+1),color=colors[i])
+ax.spines["right"].set_visible(False)
+ax.spines["top"].set_visible(False)
+plt.title(r'$\beta$0 = '+str('%.3f'%(reg.intercept_[0])))
+plt.xscale('log')
+plt.legend(frameon=False, bbox_to_anchor=(0.585, 0.5, 0.5, 0.5))
+plt.ylabel(r'$\beta$',fontsize=fontsize_label)
+plt.xlabel(r'$\lambda$',fontsize=fontsize_label)
+plt.savefig('4_5_fig.png')

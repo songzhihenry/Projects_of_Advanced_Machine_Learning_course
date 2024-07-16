@@ -1,0 +1,134 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amsbsy,amssymb,verbatim,fullpage,ifthen,graphicx,bm,amsfonts,amsthm,url}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{mathtools}
+\newcommand{\mfile}[1]  {{\small \verbatiminput{./#1}}} % Jeff Fessler, input matlab file
+\newcommand{\tmop}[1]{\ensuremath{\operatorname{#1}}}
+%\newcommand*{\qed}{\hfill\ensuremath{\blacksquare}}%
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\minimize}{\operatorname*{minimize\ }}
+\newcommand{\maximize}{\operatorname*{maximize}}
+\newcommand{\opdet}[1]{\operatorname{\textbf{det}}\left(#1\right)}
+\newcommand{\optr}[1]{\operatorname{\textbf{tr}}\left(#1\right)}
+\newcommand{\AnswerDefine}{}
+\newcommand{\answer}[2][blue]{\ifdefined\AnswerDefine{\color{#1}\it#2}\fi}
+\newcommand{\mtx}[1]{\mathbf{#1}}
+\newcommand{\vct}[1]{\mathbf{#1}}
+\def \lg       {\langle}
+\def \rg       {\rangle}
+\def \mA {\mtx{A}}
+\def \mF {\mtx{F}}
+\def \mG {\mtx{G}}
+\def \mI {\mtx{I}}
+\def \mJ {\mtx{J}}
+\def \mU {\mtx{U}}
+\def \mS {\mtx{S}}
+\def \mV {\mtx{V}}
+\def \mW {\mtx{W}}
+\def \mLambda {\mtx{\Lambda}}
+\def \mSigma {\mtx{\Sigma}}
+\def \mX {\mtx{X}}
+\def \mY {\mtx{Y}}
+\def \mZ {\mtx{Z}}
+\def \zero     {\mathbf{0}}
+\def \vzero    {\vct{0}}
+\def \vone    {\vct{1}}
+\def \va {\vct{a}}
+\def \vg {\vct{g}}
+\def \vu {\vct{u}}
+\def \vv {\vct{v}}
+\def \vx {\vct{x}}
+\def \vy {\vct{y}}
+\def \vz {\vct{z}}
+\def \vphi {\vct{\phi}}
+\def \vmu {\vct{\mu}}
+\def \R {\mathbb{R}}
+
+%\newcommand{\st}{\operatorname*{\ subject\ to\ }}
+\usepackage{algorithm,algpseudocode}
+\usepackage{xspace}
+% Add a period to the end of an abbreviation unless there's one
+% already, then \xspace.
+\makeatletter
+\DeclareRobustCommand\onedot{\futurelet\@let@token\@onedot}
+\def\@onedot{\ifx\@let@token.\else.\null\fi\xspace}
+
+\def\eg{\emph{e.g}\onedot} \def\Eg{\emph{E.g}\onedot}
+\def\ie{\emph{i.e}\onedot} \def\Ie{\emph{I.e}\onedot}
+\def\cf{\emph{c.f}\onedot} \def\Cf{\emph{C.f}\onedot}
+\def\etc{\emph{etc}\onedot} \def\vs{\emph{vs}\onedot}
+\def\wrt{w.r.t\onedot} \def\dof{d.o.f\onedot}
+\def\etal{\emph{et al}\onedot} \def\st{\emph{s.t}\onedot}
+\pagestyle{plain}
+
+\title{{\bf Homework Set 4, CPSC 8420, Spring 2022}} % Change to the appropriate homework number
+\author{\Large\underline{Song, Zhiyuan}}
+\date{\today}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Problem 1}
+	Considering soft margin SVM, where we have the objective and constraints as follows:
+	\begin{equation}\label{eq:1}
+		\begin{aligned}
+			min\;\; &\frac{1}{2}||w||_2^2 +C\sum\limits_{i=1}^{m}\xi_i\\s.t.  \;\; y_i(w^Tx_i + &b)  \geq 1 - \xi_i \;\;(i =1,2,...m)\\\xi_i \geq &0 \;\;(i =1,2,...m)
+		\end{aligned}
+	\end{equation}
+	Now we formulate another formulation as:
+	\begin{equation}\label{eq:2}
+		\begin{aligned}
+			min\;\; &\frac{1}{2}||w||_2^2 +\frac{C}{2}\sum\limits_{i=1}^{m}\xi_i^2\\s.t.  \;\; y_i(w^Tx_i + &b)  \geq 1 - \xi_i \;\;(i =1,2,...m)
+		\end{aligned}
+	\end{equation}
+	\begin{enumerate}
+		\item
+		In the Eq.\ref{eq:1}, we will always have $\exists \theta_i\in\R$ such that $2\theta_i^2=\xi_i$ because $\xi_i\geq0$. Meanwhile, $1-\xi_i=1-2\theta^2_i \ \ \st \ \ \theta_i \in \R$ has the same range with $1-\theta_i \ \ \st \ \ \theta \geq 0$. Therefore, Eq.\ref{eq:1} can be written as
+		\begin{equation}\label{eq:3}
+			\begin{aligned}
+				min\;\; &\frac{1}{2}||w||_2^2 +\frac{C}{2}\sum\limits_{i=1}^{m}\theta_i^2\\s.t.  \;\; y_i(w^Tx_i + &b)  \geq 1 - \theta_i \;\;(i =1,2,...m)
+			\end{aligned}
+		\end{equation}
+		If we replace $\theta_i$ in Eq.\ref{eq:3} with $\xi_i$, we will end up with the same expression with Eq.\ref{eq:2}. Accordingly, the ptimal value of the objective will be the same when $\xi_i$ constrain is removed in Eq.\ref{eq:2}.
+		\item
+		According to the objective function, we can obtain the generalized Lagrangian of the new soft margin SVM optimization problem.
+		\begin{equation}\label{eq:4}
+			\begin{aligned}
+				L(w,b,\xi_i)=\frac{1}{2}\|w\|^2_2+\frac{C}{2}\sum_{i}^{m}\xi_i^2-\sum_{i}^{m}\alpha_i\left[y_i\left(w^Tx_i+b\right)-1+\xi_i\right]
+			\end{aligned}
+		\end{equation} 
+		\item Minimization of $L(w,b,\xi_i)$ leads to partial derivatives with respect to the corresponding variables.   
+		\[
+		\begin{dcases}
+			\frac{\partial L}{\partial w}&=w-\sum_{i}^{m}\alpha_iy_ix_i=0\\
+			\frac{\partial L}{\partial b}&=\sum_{i}^{m}\alpha_iy_i=0\\
+			\frac{\partial L}{\partial \xi_i}&=C\xi_i-\alpha_i=0\\
+		\end{dcases}
+		\]
+		\item
+		We can plug the minimization results from the problem above to get the dual of the version soft margin SVM optimization.\\
+		\begin{equation}\label{eq:5}
+			\begin{aligned}
+				max\;\; \frac{1}{2}\sum_{i}^{m}\sum_{j}^{m}\alpha_i\alpha_jy_iy_j<x_i,x_j>&+\frac{C}{2}\sum_{i}^{m}\xi_i^2-	\sum_{i}^{m}\alpha_i\left[y_i\left(\sum_{j}^{m}\alpha_jy_jx_j^Tx_i+b\right)-1+\xi_i\right] \\
+				=max\;\; -\frac{1}{2}\sum_{i}^{m}\sum_{j}^{m}\alpha_i\alpha_jy_iy_j<x_i,x_j>&+\frac{C}{2}\sum_{i}^{m}\xi_i^2-\sum_{i}^{m}\alpha_iy_ib+\sum_{i}^{m}\alpha_i-\sum_{i}^{m}\alpha_i\xi_i\\
+				=min\;\;\frac{1}{2}\sum_{i}^{m}\sum_{j}^{m}\alpha_i\alpha_jy_iy_j<x_i,x_j>&+\sum_{i}^{m}\left(\alpha_i\xi_i-\frac{C}{2}\xi_i^2\right)-\sum_{i}^{m}\alpha_i\\
+				=min\;\;\frac{1}{2}\sum_{i}^{m}\sum_{j}^{m}\alpha_i\alpha_jy_iy_j<x_i,x_j>&+\frac{1}{2C}\sum_{i}^{m}\alpha_i^2-\sum_{i}^{m}\alpha_i
+			\end{aligned}
+		\end{equation}
+		\item
+		Small C indicates a small penalty affecting optimization in Eq.\ref{eq:4}. The slack variables are not required to be very small for the minimization process. Therefore, more tolerant misclassifications will be performed. As C increases, the penalty starts to play an important role in Eq.\ref{eq:4}. The slack variables will be smaller. The classification will be more and more strict. 
+	\end{enumerate}
+	
+	\section*{Problem 2}
+	Recall vanilla SVM objective:
+	\begin{equation}
+		\begin{aligned}
+			L(w,b,\alpha) = \frac{1}{2}||w||_2^2 - \sum\limits_{i=1}^{m}\alpha_i[y_i(w^Tx_i + b) - 1] \; \quad s.t. \quad \alpha_i \geq 0
+		\end{aligned}
+	\end{equation}
+	If we denote the margin as $\gamma$, and vector $\alpha=[\alpha_1, \alpha_2, \dots, \alpha_m]$, now please show $\gamma^2*\|\alpha\|_1=1$.
+\end{document}

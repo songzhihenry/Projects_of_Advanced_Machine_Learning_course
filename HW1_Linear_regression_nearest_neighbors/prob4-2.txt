@@ -1,0 +1,26 @@
+n = [25,50,75,100,150,200,300]
+MSE_test = []
+MSE_train = []
+MSE_SL_train = []
+MSE_SL_test = []
+for Ntrain in n:
+    Xtrain = stats.zscore(data[:Ntrain,:-1],axis=0)
+    ytrain = data[:Ntrain,-1][...,None]
+    Xtest = stats.zscore(data[Ntrain:,:-1],axis=0)
+    ytest = data[Ntrain:,-1][...,None]
+    Xtrain_mt = np.concatenate((np.ones((len(Xtrain),1)),Xtrain),axis=1)
+    Xtest_mt = np.concatenate((np.ones((len(Xtest),1)),Xtest),axis=1)
+    reg = sl.LinearRegression().fit(Xtrain, ytrain)
+    beta = Vanilla_y_hat(Xtrain_mt, ytrain)
+    MSE_train.append(MSE(ytrain,beta,Xtrain_mt))
+    MSE_test.append(MSE(ytest,beta,Xtest_mt))
+    MSE_SL_train.append(mean_squared_error(ytrain,reg.predict(Xtrain)))
+    MSE_SL_test.append(mean_squared_error(ytest,reg.predict(Xtest)))
+plt.plot(n,MSE_train,color='green',label='train',marker='D')
+plt.plot(n,MSE_test,color='cyan',label='test',marker='D')
+plt.plot(n,MSE_SL_train,color='blue',label='sklearn train')
+plt.plot(n,MSE_SL_test,color='red',label='sklearn test')
+plt.legend(frameon=False,fontsize=fontsize_label)
+plt.ylabel('MSE',fontsize=fontsize_label)
+plt.xlabel('Size of training set',fontsize=fontsize_label)
+plt.savefig('4_2_fig.png')

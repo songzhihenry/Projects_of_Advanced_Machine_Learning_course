@@ -1,0 +1,32 @@
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib
+import scipy.stats as stats
+import sklearn.linear_model as sl
+from sklearn.metrics import mean_squared_error
+fontsize_label = 18
+fontsize_ticks = 15
+#define functions for linear regression
+def Vanilla_y_hat(A,y):
+    #(A^T*A)^{-1}*A^T*y
+    result = np.linalg.pinv((A.T).dot(A)).dot(A.T)
+    beta = result.dot(y)
+    return beta
+def Ridge_y_hat(A,y,lam):
+    #(A^T*A+lambda*I)^{-1}*A^T*y
+    iden_part = lam*np.identity(len(A.T))
+    iden_part[0,0] = 1
+    result = np.linalg.pinv((A.T).dot(A)+iden_part).dot(A.T)
+    beta = result.dot(y)
+    return beta
+
+def MSE(y,beta,x):
+    #(y-y_hat)^T*(y-y_hat)
+    y_hat = x.dot(beta)
+    return ((y-y_hat).T).dot(y-y_hat)[0][0]/len(y)
+#import data
+data = np.loadtxt('housing.data')
+#remove any possible ordering fx
+seed = 2023; np.random.seed(seed)
+randperm = np.random.randint(0,len(data),len(data))
+data = data[randperm,:]
