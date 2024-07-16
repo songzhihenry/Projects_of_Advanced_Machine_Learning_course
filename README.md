@@ -1,4 +1,4 @@
-# Projects of Advanced Machine Learning Course
+# Projects of Advanced Machine Learning
 ## Advanced Machine Learning - CPSC 8420
 
 Welcome to the GitHub repository for **Advanced Machine Learning (CPSC 8420)**, instructed by Dr. Kai Liu in the Spring of 2022 at Clemson University. This repository contains assignments and projects that explore the mathematical foundations and practical implementations of major machine-learning approaches. In this repository, you will find assignments and projects that demonstrate the fundamental mathematical derivations of machine learning tools. Our approach emphasizes understanding by implementing basic mathematical concepts from scratch instead of relying on direct functions from public packages. This hands-on method fosters a more profound comprehension of machine learning principles.
