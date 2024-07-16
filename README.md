@@ -7,7 +7,7 @@ Welcome to the GitHub repository for **Advanced Machine Learning (CPSC 8420)**, 
 * Function Minimization
   * Entropy of Informatics
   * Newton-Raphson Method
-  * Gradient descent (GD)
+  * Gradient Descent (GD)
     * Convergence of GD
     * Heavy Ball Method
     * Back Tracking Line Search
@@ -42,9 +42,9 @@ Welcome to the GitHub repository for **Advanced Machine Learning (CPSC 8420)**, 
 * Data Completion
   * Relaxation
   * Singular Value Thresholding (SVT)
-  * Soft impute for Matrix Completion
-  * Hard impute for Matrix Completion
-  * Tensor data Recovery
+  * Soft Impute for Matrix Completion
+  * Hard Impute for Matrix Completion
+  * Tensor Data Recovery
 * Naïve Bayes
   * Laplacian Smoothing
   * Bayes Decision Boundary
@@ -54,7 +54,7 @@ Welcome to the GitHub repository for **Advanced Machine Learning (CPSC 8420)**, 
 - **Assignments:** Solutions to course assignments showcasing mathematical derivations and practical implementations.
 - **Projects:** Practical applications of machine learning techniques learned throughout the course.
 - **Code Examples:** Implementation of machine learning algorithms
-- **Notes** Detailed explanations and theoretical background of implemented algorithms introduced in the course.
+- **Note:** Detailed explanations and theoretical background of implemented algorithms introduced in the course.
 
 ## Acknowledgments
 
